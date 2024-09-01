@@ -47,7 +47,7 @@ def get_member(member_id):
         if not member:
             return jsonify({"msg": "Member not found"}), 404
 
-        return jsonify({"member": member}), 200
+        return jsonify(member), 200
         
     except Exception as e:
         return jsonify({"error": "Internal server error", "message": str(e)}), 500
@@ -59,7 +59,7 @@ def delete_member(member_id):
         delete_member = jackson_family.delete_member(member_id)
 
         if not delete_member:
-            return jsonify({"msg": "Member not found"}), 404
+            return jsonify({"error": "Member not found"}), 404
         return jsonify({'done':True}), 200
         
     except Exception as e:
@@ -76,12 +76,11 @@ def add_member():
         
         updated_members = jackson_family.add_member(new_member)
 
-        return jsonify({"members": updated_members}), 200
+        return jsonify(updated_members), 200
 
     except Exception as e:
         return jsonify({"error": "Internal server error", "message": str(e)}), 500
 
-    
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
